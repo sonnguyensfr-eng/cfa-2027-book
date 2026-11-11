@@ -456,6 +456,23 @@
       `;
     }
 
+    function switchLangTab(btn, targetPanelId) {
+      const container = btn.closest(".chapter-content") || document;
+      container.querySelectorAll(".lang-tab").forEach(tab => tab.classList.remove("active"));
+      btn.classList.add("active");
+
+      container.querySelectorAll(".lang-panel").forEach(panel => {
+        panel.style.display = "none";
+        panel.classList.remove("active");
+      });
+
+      const target = document.getElementById(targetPanelId);
+      if (target) {
+        target.style.display = targetPanelId.startsWith("both-") ? "block" : "block";
+        target.classList.add("active");
+      }
+    }
+
     function toggleToc(open) {
       document.getElementById("toc-overlay").classList.toggle("open", open);
       document.getElementById("toc-drawer").classList.toggle("open", open);
