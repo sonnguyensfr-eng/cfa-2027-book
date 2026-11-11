@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>CFA Level 1 (2027) — Volume 10: Đạo Đức & Chuẩn Mực Nghề Nghiệp</title>
+  <title>CFA Level 1 (2027) Curriculum — Sách & Luyện Đề Toàn Diện 10 Volumes</title>
 
   <!-- PWA Meta -->
   <meta name="theme-color" content="#FAF6ED">
@@ -24,10 +24,18 @@
   <!-- Header -->
   <header class="book-header">
     <div class="header-left">
-      <button onclick="toggleToc(true)" class="btn-icon">
+      <button onclick="toggleToc(true)" class="btn-icon" title="Mở danh sách chương">
         <i data-lucide="menu" style="width: 16px; height: 16px;"></i>
         <span>Mục lục</span>
       </button>
+
+      <!-- Volume Selector Dropdown -->
+      <div class="vol-selector-wrapper">
+        <select id="volume-select" onchange="onVolumeChange(this.value)" class="volume-dropdown">
+          <!-- Populated via JS -->
+        </select>
+      </div>
+
       <span id="active-chapter-title" class="header-title-badge">CFA Level 1 (2027)</span>
     </div>
 
@@ -51,19 +59,20 @@
     
     <!-- Hero Book Cover -->
     <section id="book-cover-section" class="book-cover">
-      <div class="cover-badge">CFA PROGRAM CURRICULUM • LEVEL I 2027</div>
-      <h1 class="cover-title">Bộ Quy Tắc Đạo Đức & Các Tiêu Chuẩn Hành Vi Nghề Nghiệp</h1>
-      <p class="cover-subtitle">Ethical and Professional Standards — Volume 10 (Chương Trình Chuẩn Quốc Tế CFA Institute)</p>
+      <div class="cover-badge" id="cover-volume-badge">CFA PROGRAM CURRICULUM • LEVEL I 2027</div>
+      <h1 class="cover-title" id="cover-volume-title">Bộ Quy Tắc Đạo Đức & Các Tiêu Chuẩn Hành Vi Nghề Nghiệp</h1>
+      <p class="cover-subtitle" id="cover-volume-subtitle">Chương Trình Đào Tạo Chuẩn Quốc Tế CFA Institute 2027 (103 Learning Modules • 990 Practice Problems)</p>
       <div class="cover-divider"></div>
-      <p class="cover-author">CFA INSTITUTE • BẢN DỊCH HỌC THUẬT TIẾNG VIỆT</p>
+      <p class="cover-author">CFA INSTITUTE • TRÍCH XUẤT VÀ BIÊN SOẠN HỌC THUẬT</p>
 
       <div class="cover-actions">
-        <button onclick="goToChapter(0)" class="btn-icon" style="background: var(--accent-color); color: #fff; padding: 12px 24px; font-size: 15px; border: none; border-radius: 30px;">
+        <button onclick="startReading()" class="btn-icon btn-primary-start">
           <i data-lucide="book-open" style="width: 18px; height: 18px;"></i>
-          <span>Bắt đầu đọc sách</span>
+          <span>Bắt đầu đọc môn này</span>
         </button>
-        <button onclick="toggleToc(true)" class="btn-icon" style="padding: 12px 20px; font-size: 15px; border-radius: 30px;">
-          <span>Xem 12 chương</span>
+        <button onclick="toggleToc(true)" class="btn-icon btn-secondary-toc">
+          <i data-lucide="list" style="width: 18px; height: 18px;"></i>
+          <span id="cover-modules-count-btn">Xem danh sách chương</span>
         </button>
       </div>
     </section>
@@ -73,24 +82,26 @@
       <!-- Injected via JS -->
     </article>
 
-    <!-- Practice Problems (Rendered if module has questions) -->
+    <!-- Practice Problems Section -->
     <section id="chapter-practice-section" class="practice-section" style="display: none;">
       <div class="practice-header">
         <span class="practice-badge">PRACTICE PROBLEMS & SOLUTIONS</span>
-        <h3 class="practice-title">Bài Tập Thực Hành & Tình Huống Cuối Bài</h3>
-        <p style="font-size: 14px; color: var(--text-muted); margin-top: 6px;">Trích xuất nguyên bản 100% từ giáo trình CFA Institute 2027</p>
+        <h3 class="practice-title">Bài Tập Trắc Nghiệm & Lời Giải Chi Tiết</h3>
+        <p style="font-size: 14px; color: var(--text-muted); margin-top: 6px;">
+          Trích xuất nguyên bản 100% từ giáo trình chuẩn CFA Institute 2027 • Mỗi đáp án trình bày xuống dòng riêng biệt
+        </p>
       </div>
 
       <div id="quiz-list-container">
         <!-- Injected via JS -->
       </div>
 
-      <div style="text-align: center; margin-top: 25px;">
-        <button id="btn-grade-chapter" onclick="gradeChapterQuiz()" class="btn-icon" style="background: #10B981; color: #fff; padding: 12px 30px; font-size: 16px; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">
+      <div class="practice-actions">
+        <button id="btn-grade-chapter" onclick="gradeChapterQuiz()" class="btn-icon btn-grade">
           <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
           <span>Chấm điểm bài làm</span>
         </button>
-        <div id="quiz-chapter-score" style="margin-top: 15px; font-weight: 700; font-size: 18px;"></div>
+        <div id="quiz-chapter-score" class="quiz-score-display"></div>
       </div>
     </section>
 
@@ -100,7 +111,7 @@
         <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
         <span>Chương trước</span>
       </button>
-      <span id="chap-page-indicator" style="font-size: 13px; color: var(--text-muted); font-family: var(--font-mono);">1 / 13</span>
+      <span id="chap-page-indicator" class="chap-indicator">Day 1 • 1 / 10</span>
       <button id="btn-next-chap" onclick="nextChapter()" class="btn-icon">
         <span>Chương sau</span>
         <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
@@ -113,9 +124,18 @@
   <div id="toc-overlay" class="drawer-overlay" onclick="toggleToc(false)"></div>
   <aside id="toc-drawer" class="toc-drawer">
     <div class="drawer-header">
-      <h3>Mục Lục Sách</h3>
+      <div>
+        <h3>Mục Lục Sách</h3>
+        <p id="drawer-volume-label" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">CFA 2027</p>
+      </div>
       <button onclick="toggleToc(false)" class="btn-icon" style="padding: 5px 8px;">✕</button>
     </div>
+    
+    <!-- Volume Pills in Drawer -->
+    <div id="drawer-volume-selector" class="drawer-volume-selector">
+      <!-- Populated via JS -->
+    </div>
+
     <div id="toc-list" class="drawer-list">
       <!-- Injected via JS -->
     </div>
@@ -124,8 +144,9 @@
   <!-- Data & App Logic -->
   <script src="book_data.js"></script>
   <script>
-    let currentChapterIndex = 0;
-    let chapterAnswers = {}; // { [chapIdx]: { [qNum]: "A" | "B" | "C" } }
+    let currentVolumeIndex = 0; // 0 is Vol 10, 1 is Vol 9, ... 9 is Vol 1
+    let currentModuleIndex = 0;  // Index in current volume's modules array
+    let userAnswers = {};        // { [volumeId_moduleNum]: { [qNum]: "A" | "B" | "C" } }
     let currentFontSize = 19;
 
     function refreshIcons() {
@@ -133,7 +154,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // Load saved preferences
+      // 1. Theme & Font init
       const savedTheme = localStorage.getItem("cfa_book_theme") || "cream";
       setTheme(savedTheme);
 
@@ -143,151 +164,282 @@
         document.documentElement.style.setProperty("--book-font-size", currentFontSize + "px");
       }
 
-      // Render TOC
-      renderToc();
-
-      // Read hash or default to 0
-      const hash = window.location.hash.replace("#", "");
-      let initIdx = 0;
-      if (hash && window.CFA_BOOK_DATA) {
-        const found = window.CFA_BOOK_DATA.findIndex(c => c.id === hash);
-        if (found !== -1) initIdx = found;
+      if (!window.CFA_ALL_VOLUMES || !window.CFA_ALL_VOLUMES.length) {
+        console.error("Dữ liệu CFA_ALL_VOLUMES chưa sẵn sàng!");
+        return;
       }
 
-      goToChapter(initIdx);
+      // 2. Populate Volume Selectors (Dropdown in header + Pills in drawer)
+      buildVolumeSelectors();
+
+      // 3. Parse URL hash (e.g. #vol10-mod1 or #day1)
+      parseUrlHash();
+
+      // 4. Render initial view
+      loadCurrentModule();
       window.addEventListener("scroll", updateProgressBar);
     });
 
-    function renderToc() {
-      const container = document.getElementById("toc-list");
-      container.innerHTML = "";
-      if (!window.CFA_BOOK_DATA) return;
+    function buildVolumeSelectors() {
+      const select = document.getElementById("volume-select");
+      const drawerSelector = document.getElementById("drawer-volume-selector");
+      select.innerHTML = "";
+      drawerSelector.innerHTML = "";
 
-      window.CFA_BOOK_DATA.forEach((chap, idx) => {
+      window.CFA_ALL_VOLUMES.forEach((vol, idx) => {
+        // Dropdown option
+        const opt = document.createElement("option");
+        opt.value = idx;
+        opt.textContent = `Vol ${vol.volume_id}: ${vol.volume_name}`;
+        select.appendChild(opt);
+
+        // Drawer quick-switch pill
+        const pill = document.createElement("button");
+        pill.className = `vol-pill ${idx === currentVolumeIndex ? 'active' : ''}`;
+        pill.id = `drawer-pill-${idx}`;
+        pill.textContent = `V${vol.volume_id} ${vol.volume_code}`;
+        pill.onclick = () => {
+          onVolumeChange(idx);
+        };
+        drawerSelector.appendChild(pill);
+      });
+    }
+
+    function onVolumeChange(volIdx) {
+      currentVolumeIndex = parseInt(volIdx);
+      currentModuleIndex = 0;
+      document.getElementById("volume-select").value = currentVolumeIndex;
+
+      // Update drawer pills active state
+      document.querySelectorAll(".vol-pill").forEach((p, i) => {
+        p.classList.toggle("active", i === currentVolumeIndex);
+      });
+
+      renderToc();
+      loadCurrentModule();
+    }
+
+    function parseUrlHash() {
+      const hash = window.location.hash.replace("#", "");
+      if (!hash) return;
+
+      // Format: day{X}
+      if (hash.startsWith("day")) {
+        const targetDay = parseInt(hash.replace("day", ""));
+        for (let vIdx = 0; vIdx < window.CFA_ALL_VOLUMES.length; vIdx++) {
+          const modIdx = window.CFA_ALL_VOLUMES[vIdx].modules.findIndex(m => m.day_num === targetDay);
+          if (modIdx !== -1) {
+            currentVolumeIndex = vIdx;
+            currentModuleIndex = modIdx;
+            return;
+          }
+        }
+      }
+
+      // Format: v{volId}-m{modNum}
+      const match = hash.match(/v(\d+)-m(\d+)/i);
+      if (match) {
+        const vId = parseInt(match[1]);
+        const mNum = parseInt(match[2]);
+        const vIdx = window.CFA_ALL_VOLUMES.findIndex(v => v.volume_id === vId);
+        if (vIdx !== -1) {
+          currentVolumeIndex = vIdx;
+          const mIdx = window.CFA_ALL_VOLUMES[vIdx].modules.findIndex(m => m.module_num === mNum);
+          if (mIdx !== -1) currentModuleIndex = mIdx;
+        }
+      }
+    }
+
+    function renderToc() {
+      const vol = window.CFA_ALL_VOLUMES[currentVolumeIndex];
+      const container = document.getElementById("toc-list");
+      const drawerLabel = document.getElementById("drawer-volume-label");
+      drawerLabel.textContent = `Vol ${vol.volume_id}: ${vol.volume_name} (${vol.modules.length} Modules)`;
+      container.innerHTML = "";
+
+      vol.modules.forEach((mod, idx) => {
         const item = document.createElement("div");
-        item.className = `toc-item ${idx === currentChapterIndex ? "active" : ""}`;
+        item.className = `toc-item ${idx === currentModuleIndex ? "active" : ""}`;
         item.id = `toc-item-${idx}`;
         item.onclick = () => {
-          goToChapter(idx);
+          goToModule(idx);
           toggleToc(false);
         };
 
-        const shortTitle = chap.title.length > 38 ? chap.title.substring(0, 38) + "..." : chap.title;
+        const shortTitle = mod.module_title.length > 40 ? mod.module_title.substring(0, 40) + "..." : mod.module_title;
         item.innerHTML = `
-          <span>${idx + 1}. ${shortTitle}</span>
-          ${chap.questions && chap.questions.length ? `<span style="font-size: 10px; background: var(--quote-bg); padding: 2px 6px; border-radius: 8px;">${chap.questions.length}Q</span>` : ""}
+          <div>
+            <div style="font-size: 11px; opacity: 0.7; font-family: var(--font-mono);">Day ${mod.day_num} • Module ${mod.module_num}</div>
+            <div style="font-weight: 600;">${shortTitle}</div>
+          </div>
+          ${mod.total_questions ? `<span class="toc-badge">${mod.total_questions}Q</span>` : ""}
         `;
         container.appendChild(item);
       });
     }
 
-    function goToChapter(idx) {
-      if (!window.CFA_BOOK_DATA || idx < 0 || idx >= window.CFA_BOOK_DATA.length) return;
-      currentChapterIndex = idx;
-      const chap = window.CFA_BOOK_DATA[idx];
-
-      window.location.hash = chap.id;
-      document.getElementById("active-chapter-title").textContent = chap.title;
-      document.getElementById("chap-page-indicator").textContent = `${idx + 1} / ${window.CFA_BOOK_DATA.length}`;
-
-      // Render Content
+    function startReading() {
+      goToModule(0);
       const article = document.getElementById("chapter-article");
-      article.innerHTML = chap.html;
+      article.scrollIntoView({ behavior: "smooth" });
+    }
 
-      // Render Quiz if available
+    function goToModule(modIdx) {
+      const vol = window.CFA_ALL_VOLUMES[currentVolumeIndex];
+      if (modIdx < 0 || modIdx >= vol.modules.length) return;
+      currentModuleIndex = modIdx;
+      loadCurrentModule();
+    }
+
+    function loadCurrentModule() {
+      const vol = window.CFA_ALL_VOLUMES[currentVolumeIndex];
+      const mod = vol.modules[currentModuleIndex];
+      if (!mod) return;
+
+      // Update Hash
+      window.location.hash = `v${vol.volume_id}-m${mod.module_num}`;
+
+      // Update Header Title & Cover Elements
+      document.getElementById("active-chapter-title").textContent = `Day ${mod.day_num}: ${mod.module_title}`;
+      document.getElementById("chap-page-indicator").textContent = `Day ${mod.day_num} • ${currentModuleIndex + 1} / ${vol.modules.length}`;
+      document.getElementById("volume-select").value = currentVolumeIndex;
+
+      // Cover metadata update
+      document.getElementById("cover-volume-badge").textContent = `CFA PROGRAM 2027 • ${vol.badge.toUpperCase()} (${vol.volume_code.toUpperCase()})`;
+      document.getElementById("cover-volume-title").textContent = vol.volume_name;
+      document.getElementById("cover-volume-subtitle").textContent = `${vol.modules.length} Learning Modules • Lộ trình Ngày ${vol.modules[0].day_num} đến Ngày ${vol.modules[vol.modules.length - 1].day_num}`;
+      document.getElementById("cover-modules-count-btn").textContent = `Xem ${vol.modules.length} bài học`;
+
+      // Update Drawer TOC
+      renderToc();
+
+      // Render Module Body Content
+      const article = document.getElementById("chapter-article");
+      article.innerHTML = mod.html_content;
+
+      // Render Practice Problems
       const quizSec = document.getElementById("chapter-practice-section");
-      const quizContainer = document.getElementById("quiz-list-container");
       document.getElementById("quiz-chapter-score").innerHTML = "";
 
-      if (chap.questions && chap.questions.length > 0) {
+      if (mod.practice_problems && mod.practice_problems.length > 0) {
         quizSec.style.display = "block";
-        renderChapterQuiz(chap.questions, idx);
+        renderChapterQuiz(mod.practice_problems, vol.volume_id, mod.module_num);
       } else {
         quizSec.style.display = "none";
       }
 
       // Update Nav Buttons
-      document.getElementById("btn-prev-chap").style.visibility = idx === 0 ? "hidden" : "visible";
-      document.getElementById("btn-next-chap").style.visibility = idx === window.CFA_BOOK_DATA.length - 1 ? "hidden" : "visible";
-
-      // Update TOC Active
-      document.querySelectorAll(".toc-item").forEach((el, i) => {
-        el.classList.toggle("active", i === idx);
-      });
+      const isFirst = (currentVolumeIndex === 0 && currentModuleIndex === 0);
+      const isLast = (currentVolumeIndex === window.CFA_ALL_VOLUMES.length - 1 && currentModuleIndex === vol.modules.length - 1);
+      document.getElementById("btn-prev-chap").style.visibility = isFirst ? "hidden" : "visible";
+      document.getElementById("btn-next-chap").style.visibility = isLast ? "hidden" : "visible";
 
       window.scrollTo({ top: 0, behavior: "smooth" });
       refreshIcons();
     }
 
     function prevChapter() {
-      goToChapter(currentChapterIndex - 1);
-    }
-    function nextChapter() {
-      goToChapter(currentChapterIndex + 1);
+      if (currentModuleIndex > 0) {
+        goToModule(currentModuleIndex - 1);
+      } else if (currentVolumeIndex > 0) {
+        // Go to last module of previous volume
+        currentVolumeIndex--;
+        const prevVol = window.CFA_ALL_VOLUMES[currentVolumeIndex];
+        currentModuleIndex = prevVol.modules.length - 1;
+        loadCurrentModule();
+      }
     }
 
-    function renderChapterQuiz(questions, chapIdx) {
+    function nextChapter() {
+      const vol = window.CFA_ALL_VOLUMES[currentVolumeIndex];
+      if (currentModuleIndex < vol.modules.length - 1) {
+        goToModule(currentModuleIndex + 1);
+      } else if (currentVolumeIndex < window.CFA_ALL_VOLUMES.length - 1) {
+        // Go to first module of next volume
+        currentVolumeIndex++;
+        currentModuleIndex = 0;
+        loadCurrentModule();
+      }
+    }
+
+    function renderChapterQuiz(questions, volId, modNum) {
       const container = document.getElementById("quiz-list-container");
       container.innerHTML = "";
-      chapterAnswers[chapIdx] = chapterAnswers[chapIdx] || {};
+      const quizKey = `${volId}_${modNum}`;
+      userAnswers[quizKey] = userAnswers[quizKey] || {};
 
       questions.forEach(q => {
         const card = document.createElement("div");
         card.className = "quiz-card";
 
+        // Build vertical options list where each option is strictly on its own row/line
         let optionsHtml = "";
         ["A", "B", "C"].forEach(letter => {
-          if (q.options[letter]) {
-            const isSelected = chapterAnswers[chapIdx][q.q_num] === letter;
+          if (q.options && q.options[letter]) {
+            const isSelected = userAnswers[quizKey][q.q_num] === letter;
             optionsHtml += `
-              <div onclick="selectQuizOpt(${chapIdx}, ${q.q_num}, '${letter}')" id="opt-${chapIdx}-${q.q_num}-${letter}" class="quiz-opt-item ${isSelected ? 'selected' : ''}">
+              <div onclick="selectQuizOpt('${quizKey}', ${q.q_num}, '${letter}')" 
+                   id="opt-${quizKey}-${q.q_num}-${letter}" 
+                   class="quiz-opt-item ${isSelected ? 'selected' : ''}">
                 <span class="opt-bubble">${letter}</span>
-                <span>${q.options[letter]}</span>
+                <span class="opt-text">${q.options[letter]}</span>
               </div>
             `;
           }
         });
 
         card.innerHTML = `
-          <p class="quiz-stem"><strong>Question ${q.q_num}:</strong> ${q.stem}</p>
-          <div class="quiz-options-list">${optionsHtml}</div>
-          <div id="sol-${chapIdx}-${q.q_num}" class="quiz-solution">
-            <strong style="color: #10B981;">Giải thích CFA Institute:</strong>
-            <p style="margin-top: 5px;">${q.solution_explanation}</p>
+          <div class="quiz-stem">
+            <span class="quiz-stem-badge">Question ${q.q_num}</span>
+            <div class="quiz-stem-text">${q.stem}</div>
+          </div>
+          <div class="quiz-options-list">
+            ${optionsHtml}
+          </div>
+          <div id="sol-${quizKey}-${q.q_num}" class="quiz-solution">
+            <div class="solution-header">
+              <i data-lucide="check-circle-2" style="width: 16px; height: 16px; color: #10B981;"></i>
+              <strong>CFA Institute Official Explanation:</strong>
+            </div>
+            <div class="solution-body">${q.solution_explanation}</div>
           </div>
         `;
         container.appendChild(card);
       });
+
+      refreshIcons();
     }
 
-    function selectQuizOpt(chapIdx, qNum, letter) {
-      chapterAnswers[chapIdx] = chapterAnswers[chapIdx] || {};
-      chapterAnswers[chapIdx][qNum] = letter;
+    function selectQuizOpt(quizKey, qNum, letter) {
+      userAnswers[quizKey] = userAnswers[quizKey] || {};
+      userAnswers[quizKey][qNum] = letter;
 
       ["A", "B", "C"].forEach(l => {
-        const el = document.getElementById(`opt-${chapIdx}-${qNum}-${l}`);
+        const el = document.getElementById(`opt-${quizKey}-${qNum}-${l}`);
         if (el) el.classList.toggle("selected", l === letter);
       });
     }
 
     function gradeChapterQuiz() {
-      const chap = window.CFA_BOOK_DATA[currentChapterIndex];
-      if (!chap || !chap.questions) return;
+      const vol = window.CFA_ALL_VOLUMES[currentVolumeIndex];
+      const mod = vol.modules[currentModuleIndex];
+      if (!mod || !mod.practice_problems) return;
 
+      const quizKey = `${vol.volume_id}_${mod.module_num}`;
       let correct = 0;
-      const total = chap.questions.length;
-      const ans = chapterAnswers[currentChapterIndex] || {};
+      const total = mod.practice_problems.length;
+      const ans = userAnswers[quizKey] || {};
 
-      chap.questions.forEach(q => {
+      mod.practice_problems.forEach(q => {
         const chosen = ans[q.q_num];
         const right = q.correct_answer;
-        const solEl = document.getElementById(`sol-${currentChapterIndex}-${q.q_num}`);
+        const solEl = document.getElementById(`sol-${quizKey}-${q.q_num}`);
         if (solEl) solEl.style.display = "block";
 
         if (chosen === right) correct++;
 
         ["A", "B", "C"].forEach(l => {
-          const el = document.getElementById(`opt-${currentChapterIndex}-${q.q_num}-${l}`);
+          const el = document.getElementById(`opt-${quizKey}-${q.q_num}-${l}`);
           if (el) {
             if (l === right) el.classList.add("correct");
             else if (l === chosen && chosen !== right) el.classList.add("wrong");
