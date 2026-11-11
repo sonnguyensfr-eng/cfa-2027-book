@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CFA Level 1 (2027) — Volume 10: Đạo Đức & Chuẩn Mực Nghề Nghiệp</title>
+
+  <!-- PWA Meta -->
+  <meta name="theme-color" content="#FAF6ED">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="theme-cream">
+
+  <!-- Top Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Header -->
+  <header class="book-header">
+    <div class="header-left">
+      <button onclick="toggleToc(true)" class="btn-icon">
+        <i data-lucide="menu" style="width: 16px; height: 16px;"></i>
+        <span>Mục lục</span>
+      </button>
+      <span id="active-chapter-title" class="header-title-badge">CFA Level 1 (2027)</span>
+    </div>
+
+    <div class="header-controls">
+      <!-- Font size controls -->
+      <button onclick="changeFontSize(-1)" class="btn-icon" title="Giảm cỡ chữ">A-</button>
+      <button onclick="changeFontSize(1)" class="btn-icon" title="Tăng cỡ chữ">A+</button>
+
+      <!-- Theme selector -->
+      <div style="display: flex; gap: 6px; margin-left: 6px;">
+        <button onclick="setTheme('cream')" class="theme-pill cream active" title="Giấy kem"></button>
+        <button onclick="setTheme('white')" class="theme-pill white" title="Trắng tinh"></button>
+        <button onclick="setTheme('sepia')" class="theme-pill sepia" title="Sepia"></button>
+        <button onclick="setTheme('dark')" class="theme-pill dark" title="Đêm"></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="book-container">
+    
+    <!-- Hero Book Cover -->
+    <section id="book-cover-section" class="book-cover">
+      <div class="cover-badge">CFA PROGRAM CURRICULUM • LEVEL I 2027</div>
+      <h1 class="cover-title">Bộ Quy Tắc Đạo Đức & Các Tiêu Chuẩn Hành Vi Nghề Nghiệp</h1>
+      <p class="cover-subtitle">Ethical and Professional Standards — Volume 10 (Chương Trình Chuẩn Quốc Tế CFA Institute)</p>
+      <div class="cover-divider"></div>
+      <p class="cover-author">CFA INSTITUTE • BẢN DỊCH HỌC THUẬT TIẾNG VIỆT</p>
+
+      <div class="cover-actions">
+        <button onclick="goToChapter(0)" class="btn-icon" style="background: var(--accent-color); color: #fff; padding: 12px 24px; font-size: 15px; border: none; border-radius: 30px;">
+          <i data-lucide="book-open" style="width: 18px; height: 18px;"></i>
+          <span>Bắt đầu đọc sách</span>
+        </button>
+        <button onclick="toggleToc(true)" class="btn-icon" style="padding: 12px 20px; font-size: 15px; border-radius: 30px;">
+          <span>Xem 12 chương</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Chapter Body -->
+    <article id="chapter-article" class="chapter-content">
+      <!-- Injected via JS -->
+    </article>
+
+    <!-- Practice Problems (Rendered if module has questions) -->
+    <section id="chapter-practice-section" class="practice-section" style="display: none;">
+      <div class="practice-header">
+        <span class="practice-badge">PRACTICE PROBLEMS & SOLUTIONS</span>
+        <h3 class="practice-title">Bài Tập Thực Hành & Tình Huống Cuối Bài</h3>
+        <p style="font-size: 14px; color: var(--text-muted); margin-top: 6px;">Trích xuất nguyên bản 100% từ giáo trình CFA Institute 2027</p>
+      </div>
+
+      <div id="quiz-list-container">
+        <!-- Injected via JS -->
+      </div>
+
+      <div style="text-align: center; margin-top: 25px;">
+        <button id="btn-grade-chapter" onclick="gradeChapterQuiz()" class="btn-icon" style="background: #10B981; color: #fff; padding: 12px 30px; font-size: 16px; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">
+          <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+          <span>Chấm điểm bài làm</span>
+        </button>
+        <div id="quiz-chapter-score" style="margin-top: 15px; font-weight: 700; font-size: 18px;"></div>
+      </div>
+    </section>
+
+    <!-- Chapter Navigation Footer -->
+    <footer class="chapter-nav">
+      <button id="btn-prev-chap" onclick="prevChapter()" class="btn-icon">
+        <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+        <span>Chương trước</span>
+      </button>
+      <span id="chap-page-indicator" style="font-size: 13px; color: var(--text-muted); font-family: var(--font-mono);">1 / 13</span>
+      <button id="btn-next-chap" onclick="nextChapter()" class="btn-icon">
+        <span>Chương sau</span>
+        <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+      </button>
+    </footer>
+
+  </main>
+
+  <!-- Slide-Over Table of Contents Drawer -->
+  <div id="toc-overlay" class="drawer-overlay" onclick="toggleToc(false)"></div>
+  <aside id="toc-drawer" class="toc-drawer">
+    <div class="drawer-header">
+      <h3>Mục Lục Sách</h3>
+      <button onclick="toggleToc(false)" class="btn-icon" style="padding: 5px 8px;">✕</button>
+    </div>
+    <div id="toc-list" class="drawer-list">
+      <!-- Injected via JS -->
+    </div>
+  </aside>
+
+  <!-- Data & App Logic -->
+  <script src="book_data.js"></script>
+  <script>
+    let currentChapterIndex = 0;
+    let chapterAnswers = {}; // { [chapIdx]: { [qNum]: "A" | "B" | "C" } }
+    let currentFontSize = 19;
+
+    function refreshIcons() {
+      if (window.lucide) lucide.createIcons();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Load saved preferences
+      const savedTheme = localStorage.getItem("cfa_book_theme") || "cream";
+      setTheme(savedTheme);
+
+      const savedFont = localStorage.getItem("cfa_book_font");
+      if (savedFont) {
+        currentFontSize = parseInt(savedFont);
+        document.documentElement.style.setProperty("--book-font-size", currentFontSize + "px");
+      }
+
+      // Render TOC
+      renderToc();
+
+      // Read hash or default to 0
+      const hash = window.location.hash.replace("#", "");
+      let initIdx = 0;
+      if (hash && window.CFA_BOOK_DATA) {
+        const found = window.CFA_BOOK_DATA.findIndex(c => c.id === hash);
+        if (found !== -1) initIdx = found;
+      }
+
+      goToChapter(initIdx);
+      window.addEventListener("scroll", updateProgressBar);
+    });
+
+    function renderToc() {
+      const container = document.getElementById("toc-list");
+      container.innerHTML = "";
+      if (!window.CFA_BOOK_DATA) return;
+
+      window.CFA_BOOK_DATA.forEach((chap, idx) => {
+        const item = document.createElement("div");
+        item.className = `toc-item ${idx === currentChapterIndex ? "active" : ""}`;
+        item.id = `toc-item-${idx}`;
+        item.onclick = () => {
+          goToChapter(idx);
+          toggleToc(false);
+        };
+
+        const shortTitle = chap.title.length > 38 ? chap.title.substring(0, 38) + "..." : chap.title;
+        item.innerHTML = `
+          <span>${idx + 1}. ${shortTitle}</span>
+          ${chap.questions && chap.questions.length ? `<span style="font-size: 10px; background: var(--quote-bg); padding: 2px 6px; border-radius: 8px;">${chap.questions.length}Q</span>` : ""}
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function goToChapter(idx) {
+      if (!window.CFA_BOOK_DATA || idx < 0 || idx >= window.CFA_BOOK_DATA.length) return;
+      currentChapterIndex = idx;
+      const chap = window.CFA_BOOK_DATA[idx];
+
+      window.location.hash = chap.id;
+      document.getElementById("active-chapter-title").textContent = chap.title;
+      document.getElementById("chap-page-indicator").textContent = `${idx + 1} / ${window.CFA_BOOK_DATA.length}`;
+
+      // Render Content
+      const article = document.getElementById("chapter-article");
+      article.innerHTML = chap.html;
+
+      // Render Quiz if available
+      const quizSec = document.getElementById("chapter-practice-section");
+      const quizContainer = document.getElementById("quiz-list-container");
+      document.getElementById("quiz-chapter-score").innerHTML = "";
+
+      if (chap.questions && chap.questions.length > 0) {
+        quizSec.style.display = "block";
+        renderChapterQuiz(chap.questions, idx);
+      } else {
+        quizSec.style.display = "none";
+      }
+
+      // Update Nav Buttons
+      document.getElementById("btn-prev-chap").style.visibility = idx === 0 ? "hidden" : "visible";
+      document.getElementById("btn-next-chap").style.visibility = idx === window.CFA_BOOK_DATA.length - 1 ? "hidden" : "visible";
+
+      // Update TOC Active
+      document.querySelectorAll(".toc-item").forEach((el, i) => {
+        el.classList.toggle("active", i === idx);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      refreshIcons();
+    }
+
+    function prevChapter() {
+      goToChapter(currentChapterIndex - 1);
+    }
+    function nextChapter() {
+      goToChapter(currentChapterIndex + 1);
+    }
+
+    function renderChapterQuiz(questions, chapIdx) {
+      const container = document.getElementById("quiz-list-container");
+      container.innerHTML = "";
+      chapterAnswers[chapIdx] = chapterAnswers[chapIdx] || {};
+
+      questions.forEach(q => {
+        const card = document.createElement("div");
+        card.className = "quiz-card";
+
+        let optionsHtml = "";
+        ["A", "B", "C"].forEach(letter => {
+          if (q.options[letter]) {
+            const isSelected = chapterAnswers[chapIdx][q.q_num] === letter;
+            optionsHtml += `
+              <div onclick="selectQuizOpt(${chapIdx}, ${q.q_num}, '${letter}')" id="opt-${chapIdx}-${q.q_num}-${letter}" class="quiz-opt-item ${isSelected ? 'selected' : ''}">
+                <span class="opt-bubble">${letter}</span>
+                <span>${q.options[letter]}</span>
+              </div>
+            `;
+          }
+        });
+
+        card.innerHTML = `
+          <p class="quiz-stem"><strong>Question ${q.q_num}:</strong> ${q.stem}</p>
+          <div class="quiz-options-list">${optionsHtml}</div>
+          <div id="sol-${chapIdx}-${q.q_num}" class="quiz-solution">
+            <strong style="color: #10B981;">Giải thích CFA Institute:</strong>
+            <p style="margin-top: 5px;">${q.solution_explanation}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function selectQuizOpt(chapIdx, qNum, letter) {
+      chapterAnswers[chapIdx] = chapterAnswers[chapIdx] || {};
+      chapterAnswers[chapIdx][qNum] = letter;
+
+      ["A", "B", "C"].forEach(l => {
+        const el = document.getElementById(`opt-${chapIdx}-${qNum}-${l}`);
+        if (el) el.classList.toggle("selected", l === letter);
+      });
+    }
+
+    function gradeChapterQuiz() {
+      const chap = window.CFA_BOOK_DATA[currentChapterIndex];
+      if (!chap || !chap.questions) return;
+
+      let correct = 0;
+      const total = chap.questions.length;
+      const ans = chapterAnswers[currentChapterIndex] || {};
+
+      chap.questions.forEach(q => {
+        const chosen = ans[q.q_num];
+        const right = q.correct_answer;
+        const solEl = document.getElementById(`sol-${currentChapterIndex}-${q.q_num}`);
+        if (solEl) solEl.style.display = "block";
+
+        if (chosen === right) correct++;
+
+        ["A", "B", "C"].forEach(l => {
+          const el = document.getElementById(`opt-${currentChapterIndex}-${q.q_num}-${l}`);
+          if (el) {
+            if (l === right) el.classList.add("correct");
+            else if (l === chosen && chosen !== right) el.classList.add("wrong");
+          }
+        });
+      });
+
+      const pct = Math.round((correct / total) * 100);
+      const scoreEl = document.getElementById("quiz-chapter-score");
+      scoreEl.innerHTML = `
+        <span style="color: ${pct >= 70 ? '#10B981' : '#EF4444'};">
+          Kết quả: ${correct}/${total} câu đúng (${pct}%) — ${pct >= 70 ? 'ĐẠT CHUẨN PASS 🎉' : 'CẦN ÔN LẠI 💡'}
+        </span>
+      `;
+    }
+
+    function toggleToc(open) {
+      document.getElementById("toc-overlay").classList.toggle("open", open);
+      document.getElementById("toc-drawer").classList.toggle("open", open);
+    }
+
+    function setTheme(theme) {
+      document.body.className = `theme-${theme}`;
+      localStorage.setItem("cfa_book_theme", theme);
+      document.querySelectorAll(".theme-pill").forEach(p => {
+        p.classList.toggle("active", p.classList.contains(theme));
+      });
+    }
+
+    function changeFontSize(delta) {
+      currentFontSize = Math.max(15, Math.min(26, currentFontSize + delta));
+      document.documentElement.style.setProperty("--book-font-size", currentFontSize + "px");
+      localStorage.setItem("cfa_book_font", currentFontSize);
+    }
+
+    function updateProgressBar() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById("progress-bar").style.width = pct + "%";
+    }
+  </script>
+</body>
+</html>
