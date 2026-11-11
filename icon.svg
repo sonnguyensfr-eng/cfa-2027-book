@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="128" fill="#8C2D19"/>
+  <circle cx="256" cy="256" r="190" fill="#FAF6ED" stroke="#D6C8A6" stroke-width="6"/>
+  <path d="M170 340 L256 160 L342 340 Z" fill="none" stroke="#8C2D19" stroke-width="12" stroke-linejoin="round"/>
+  <text x="256" y="305" font-family="'Playfair Display', Georgia, serif" font-size="76" font-weight="900" fill="#241E19" text-anchor="middle">CFA</text>
+  <text x="256" y="415" font-family="'Plus Jakarta Sans', sans-serif" font-size="30" font-weight="800" fill="#8C2D19" text-anchor="middle">2027 BOOK</text>
+</svg>
