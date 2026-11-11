@@ -1,0 +1,16 @@
+{
+  "name": "CFA Level 1 (2027) Book Reader",
+  "short_name": "CFA Book",
+  "description": "Sách Học Thuật & Luyện Đề CFA 2027 - Volume 10: Ethical and Professional Standards",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF6ED",
+  "theme_color": "#8C2D19",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
