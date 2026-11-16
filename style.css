@@ -1254,3 +1254,93 @@ body.theme-dark .svg-diagram-wrapper text {
   background-color: rgba(217, 119, 6, 0.04);
   border-radius: 0 10px 10px 0;
 }
+
+
+/* Academic Content Typography */
+.academic-vn-content {
+  font-family: var(--font-serif);
+  font-size: var(--book-font-size);
+  line-height: 1.85;
+  color: var(--text-main);
+}
+
+.academic-vn-content h1, .academic-vn-content h2, .academic-vn-content h3 {
+  margin-top: 1.8em;
+  margin-bottom: 0.8em;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.academic-vn-content p {
+  margin-bottom: 1.4em;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.academic-vn-content ul, .academic-vn-content ol {
+  margin: 14px 0 20px 24px;
+}
+
+.academic-vn-content li {
+  margin-bottom: 8px;
+  line-height: 1.75;
+}
+
+/* Learning Outcomes Box in English */
+.en-los-card {
+  background-color: rgba(37, 99, 235, 0.05);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin: 24px 0;
+}
+
+.en-los-card strong {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: #2563EB;
+  margin-bottom: 12px;
+}
+
+.en-los-card ul {
+  margin: 0 0 0 20px;
+}
+
+.en-los-card li {
+  margin-bottom: 6px;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+/* Theme adaptation for KaTeX Math */
+body.theme-dark .katex {
+  color: #F1F5F9;
+}
+
+body.theme-sepia .katex {
+  color: #433422;
+}
+
+body.theme-cream .katex {
+  color: #1E293B;
+}
+
+body.theme-dark .book-exhibit-card {
+  background-color: rgba(37, 99, 235, 0.12);
+  border-left-color: #3B82F6;
+}
+
+body.theme-dark .book-example-card {
+  background-color: rgba(217, 119, 6, 0.12);
+  border-left-color: #F59E0B;
+}
+
+body.theme-dark .en-los-card {
+  background-color: rgba(37, 99, 235, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+body.theme-dark .en-los-card strong {
+  color: #60A5FA;
+}
