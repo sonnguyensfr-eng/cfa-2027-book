@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="style.css">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="setTimeout(renderAllMath, 100)"></script>
 </head>
 <body class="theme-cream">
 
@@ -339,6 +343,7 @@
 
       window.scrollTo({ top: 0, behavior: "smooth" });
       refreshIcons();
+      setTimeout(renderAllMath, 50);
     }
 
     function prevChapter() {
@@ -411,6 +416,7 @@
       });
 
       refreshIcons();
+      setTimeout(renderAllMath, 50);
     }
 
     function selectQuizOpt(quizKey, qNum, letter) {
@@ -459,6 +465,38 @@
       `;
     }
 
+    
+    function renderAllMath() {
+      if (typeof renderMathInElement === "function") {
+        const bodyEl = document.getElementById("chapter-body-container");
+        if (bodyEl) {
+          renderMathInElement(bodyEl, {
+            delimiters: [
+              {left: "$$", right: "$$", display: true},
+              {left: "$", right: "$", display: false},
+              {left: "\\[", right: "\\]", display: true},
+              {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false
+          });
+        }
+        const qEl = document.getElementById("quiz-list-container");
+        if (qEl) {
+          renderMathInElement(qEl, {
+            delimiters: [
+              {left: "$$", right: "$$", display: true},
+              {left: "$", right: "$", display: false},
+              {left: "\\[", right: "\\]", display: true},
+              {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false
+          });
+        }
+      } else {
+        setTimeout(renderAllMath, 200);
+      }
+    }
+
     function switchLangTab(btn, targetPanelId) {
       const container = btn.closest(".chapter-content") || document;
       container.querySelectorAll(".lang-tab").forEach(tab => tab.classList.remove("active"));
@@ -473,6 +511,7 @@
       if (target) {
         target.style.display = targetPanelId.startsWith("both-") ? "block" : "block";
         target.classList.add("active");
+        setTimeout(renderAllMath, 50);
       }
     }
 
